@@ -1,0 +1,47 @@
+<div class="container">
+  <h3>Search movies in IMDb</h3>
+  <div class="well">
+    <h4>By Title</h4>
+    <div class="form-group">
+      <input type="text" placeholder="Enter search phrase" [formControl]="searchInput" class="form-control">
+    </div>
+    <div class="form-group">
+      <input type="text" placeholder="Enter year" [formControl]="yearInput" class="form-control">
+    </div>
+    <div class="form-group flex-container">
+      <label class="flex-initial">Plot</label>
+      <select [formControl]="plotInput" class="form-control">
+        <option *ngFor="let plot of getMoviePlots()">{{plot | titlecase}}</option>
+      </select>
+    </div>
+    <div class="form-group flex-container">
+      <label class="flex-initial">Type</label>
+      <select [formControl]="typeInput" class="form-control">
+        <option *ngFor="let type of getMovieTypes()">{{type | titlecase}}</option>
+      </select>
+    </div>
+    <button class="btn btn-primary" (click)="submitSearch()">Submit Query</button>
+  </div>
+  <div class="well" *ngIf="data$ as data else nodata">
+    <h4>Search Results for "{{searchInput.value}}"</h4>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Year</th>
+          <th>Plot</th>
+          <th>Type</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let movie of data.Search">
+          <td>{{movie.Title}}</td>
+          <td>{{plotInput.value}}</td>
+          <td>{{movie.Year}}</td>
+          <td>{{movie.Type}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <ng-template #nodata><div class="well">No results to show.</div></ng-template>
+</div>
